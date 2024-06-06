@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pathfinding
 {
+    public static Pathfinding Instance;
     private const int MOVE_STRAIGHT_COST = 10;
     private const int MOVE_DIAGONAL_COST = 14;
     private Grid<PathNode> grid;
@@ -13,66 +15,33 @@ public class Pathfinding
 
     public Pathfinding(int width, int height, float cellSize, Vector2 originPostion)
     {
+        Instance = this;
         grid = new Grid<PathNode>(width, height, cellSize, originPostion, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y), true);
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (x == 0 && y == 0)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-
-                if (x == 0 && y == 1)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-
-                if (x == 1 && y == 1)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-
-                if (x == 1 && y == 2)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-
-                if (x == 2 && y == 2)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-
-                if (x == 2 && y == 3)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-
-                if (x == 3 && y == 3)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-
-                if (x == 3 && y == 4)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-
-                if (x == 4 && y == 4)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-                if (x == 5 && y == 5)
-                {
-                    grid.GetGridObject(x, y).SetIsWalkable(false);
-                }
-            }
-        }
     }
 
     public Grid<PathNode> GetGrid()
     {
         return grid;
+    }
+
+    public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition) {
+        grid.GetXY(startWorldPosition, out int startX, out int startY);
+        grid.GetXY(endWorldPosition, out int endX, out int endY);
+
+        List<PathNode> path = FindPath(startX, startY, endX, endY);
+
+        if(path == null) {
+            return null;
+        } else {
+            List<Vector3> vectorPath = new();
+            foreach(PathNode pathNode in path) {
+                Vector2 newPoint = new(pathNode.x * grid.GetCellSize(), pathNode.y * grid.GetCellSize());
+                newPoint += grid.GetOriginPosition();
+                newPoint += grid.GetCellCenterOffset();
+                vectorPath.Add(newPoint);
+            }
+            return vectorPath;
+        }
     }
 
     public List<PathNode> FindPath(int startX, int startY, int endX, int endY)
@@ -136,29 +105,6 @@ public class Pathfinding
         }
 
         // Out of nodes on the openList
-        return null;
-    }
-
-    public List<Vector2> GetWalkingPath(Vector2 startPos, Vector2 endPos)
-    {
-        GetGrid().GetXY(startPos, out int startX, out int startY);
-        GetGrid().GetXY(endPos, out int endX, out int endY);
-        List<PathNode> pathNodes = FindPath(startX, startY, endX, endY);
-
-        if (pathNodes != null)
-        {
-            List<Vector2> walkingPath = new List<Vector2>();
-            pathNodes.ForEach(node =>
-            {
-                Vector2 newPoint = new(node.x * grid.GetCellSize(), node.y * grid.GetCellSize());
-                newPoint += grid.GetOriginPosition();
-                newPoint += grid.GetCellCenterOffset();
-                Debug.Log(newPoint);
-                walkingPath.Add(newPoint);
-            });
-            return walkingPath;
-        }
-
         return null;
     }
 

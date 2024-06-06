@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     private Vector3 mousePosition;
 
 
-    private List<Vector2> movePath;
+    private List<Vector3> movePath;
 
     private void Awake()
     {
@@ -30,16 +30,23 @@ public class Player : MonoBehaviour
 
         playerControls.MouseClick.Move.performed += context => LeftMouseClick(context);
 
-        movePath = new List<Vector2>();
+        movePath = new List<Vector3>();
     }
 
     private void LeftMouseClick(InputAction.CallbackContext context)
     {
+        Vector3 playerPosition = playerRigidbody.position;
+        if(movePath.Count > 1) {
+            Vector3 lastPoint = movePath[0];
+            movePath.Clear();
+            movePath.Add(lastPoint);
+            playerPosition = lastPoint;
+        }
+
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(playerRigidbody.position);
-        List<Vector2> path = pathfinderTest.GetWalkingPath(playerRigidbody.position, mousePosition);
-        if (path != null)
-        {
+
+        List<Vector3> path = Pathfinding.Instance.FindPath(playerPosition, mousePosition);
+        if(path != null) {
             movePath.AddRange(path);
         }
     }
@@ -56,31 +63,19 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePathTest();
+        Move();
     }
 
     private void PlayerInput()
     {
         movement = playerControls.Movement.Move.ReadValue<Vector2>();
-        //movement = playerControls.Movement.MouseMove.ReadValue<Vector2>();
     }
 
     private void Move()
     {
-        playerRigidbody.MovePosition(playerRigidbody.position + movement * (moveSpeed * Time.fixedDeltaTime));
-    }
-
-    private void MoveMouse()
-    {
-        Vector2 newPosition = Vector2.MoveTowards(playerRigidbody.position, mousePosition, moveSpeed * Time.fixedDeltaTime);
-        playerRigidbody.MovePosition(newPosition);
-    }
-
-    private void MovePathTest()
-    {
         if (movePath.Count <= 0) return;
 
-        Vector2 currentPosition = playerRigidbody.position;
+        Vector3 currentPosition = playerRigidbody.position;
 
         if (currentPosition == movePath[0])
         {
