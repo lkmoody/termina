@@ -21,7 +21,7 @@ public class Grid<TGridObject> {
     private TGridObject[,] gridArray;
     private Vector2 cellCenterOffset;
 
-    public Grid(int width, int height, float cellSize, Vector3 originPosition, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject, bool showDebug = false) {
+    public Grid(int width, int height, float cellSize, Vector3 originPosition, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject, bool debugMode = false) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
@@ -36,12 +36,12 @@ public class Grid<TGridObject> {
             }
         }
 
-        if (showDebug) {
-            TextMesh[,] debugTextArray = new TextMesh[width, height];
+        if (debugMode) {
+            //TextMesh[,] debugTextArray = new TextMesh[width, height];
 
             for (int x = 0; x < gridArray.GetLength(0); x++) {
                 for (int y = 0; y < gridArray.GetLength(1); y++) {
-                    debugTextArray[x, y] = TextUtils.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f, 30, Color.white, TextAnchor.MiddleCenter);
+                    //debugTextArray[x, y] = TextUtils.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x, y) + new Vector2(cellSize, cellSize) * .5f, 8, Color.white, TextAnchor.MiddleCenter);
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
                 }
@@ -50,7 +50,7 @@ public class Grid<TGridObject> {
             Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
 
             OnGridObjectChanged += (object sender, OnGridObjectChangedEventArgs eventArgs) => {
-                debugTextArray[eventArgs.x, eventArgs.y].text = gridArray[eventArgs.x, eventArgs.y]?.ToString();
+                //debugTextArray[eventArgs.x, eventArgs.y].text = gridArray[eventArgs.x, eventArgs.y]?.ToString();
             };
         }
     }

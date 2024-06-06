@@ -17,7 +17,7 @@ public class PathfinderTest : MonoBehaviour
 
     private void Start()
     {
-        pathfinding = new Pathfinding(10, 10, 10f, new Vector3(-5 * 10f, -5 * 10f, 0));
+        pathfinding = new Pathfinding(10, 10, 10f, new Vector3(-5 * 10f, -5 * 10f, 0), true);
         pathfindingDebug.SetGrid(pathfinding.GetGrid());
     }
 
