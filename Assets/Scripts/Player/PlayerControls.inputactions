@@ -30,14 +30,41 @@
             ]
         },
         {
-            "name": "Movement",
-            "id": "838c826c-95a2-4599-a086-e386d37e8f48",
+            "name": "GridMovement",
+            "id": "00395115-aebc-4003-8fed-7d5563bf395c",
             "actions": [
                 {
-                    "name": "Move",
-                    "type": "PassThrough",
-                    "id": "4a9bba2e-d9d1-458d-bf2a-9cb3364368f9",
-                    "expectedControlType": "Vector2",
+                    "name": "North",
+                    "type": "Button",
+                    "id": "80b53f27-e8e1-4140-80d8-3cc76ccf907f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "West",
+                    "type": "Button",
+                    "id": "3b3d0762-1d03-437d-b7b2-bf5fe8b3be17",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "South",
+                    "type": "Button",
+                    "id": "30f3453b-1b2e-4508-82f2-566e84fdc993",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "East",
+                    "type": "Button",
+                    "id": "adadf644-29d8-4724-b421-83163595defb",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -46,69 +73,47 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "8c25b8bc-ae74-4bec-a68d-da574911c9cc",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "2D Vector",
-                    "id": "c59475cd-06ae-44f0-be66-a38b4c3f38d0",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "e440ddfe-f659-4b76-9d1e-8c9d40f95ffd",
+                    "id": "37e3dff7-9cab-4be6-b34b-9e6285222e35",
                     "path": "<Keyboard>/w",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "North",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "down",
-                    "id": "43149b7a-c090-417f-b0c4-5b34f5427bab",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "0e3e292b-28f6-4ed0-8699-e87e2d1d2445",
+                    "name": "",
+                    "id": "56c48b03-8375-4820-92fb-264858dbaeed",
                     "path": "<Keyboard>/a",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "West",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "right",
-                    "id": "5fc30d0b-cef5-40b9-ac90-e8609b269bd6",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
+                    "name": "",
+                    "id": "fcfcfaba-465f-4fdb-b5aa-805a55949120",
+                    "path": "<Keyboard>/s",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "South",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "917020a0-0ba4-468a-8bdc-5d04d8203389",
+                    "path": "<Keyboard>/d",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "East",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

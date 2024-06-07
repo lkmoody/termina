@@ -52,14 +52,41 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Movement"",
-            ""id"": ""838c826c-95a2-4599-a086-e386d37e8f48"",
+            ""name"": ""GridMovement"",
+            ""id"": ""00395115-aebc-4003-8fed-7d5563bf395c"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""4a9bba2e-d9d1-458d-bf2a-9cb3364368f9"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""North"",
+                    ""type"": ""Button"",
+                    ""id"": ""80b53f27-e8e1-4140-80d8-3cc76ccf907f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""West"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b3d0762-1d03-437d-b7b2-bf5fe8b3be17"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""South"",
+                    ""type"": ""Button"",
+                    ""id"": ""30f3453b-1b2e-4508-82f2-566e84fdc993"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""East"",
+                    ""type"": ""Button"",
+                    ""id"": ""adadf644-29d8-4724-b421-83163595defb"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -68,69 +95,47 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""8c25b8bc-ae74-4bec-a68d-da574911c9cc"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""c59475cd-06ae-44f0-be66-a38b4c3f38d0"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""e440ddfe-f659-4b76-9d1e-8c9d40f95ffd"",
+                    ""id"": ""37e3dff7-9cab-4be6-b34b-9e6285222e35"",
                     ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""North"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""43149b7a-c090-417f-b0c4-5b34f5427bab"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""0e3e292b-28f6-4ed0-8699-e87e2d1d2445"",
+                    ""name"": """",
+                    ""id"": ""56c48b03-8375-4820-92fb-264858dbaeed"",
                     ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""West"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""5fc30d0b-cef5-40b9-ac90-e8609b269bd6"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
+                    ""name"": """",
+                    ""id"": ""fcfcfaba-465f-4fdb-b5aa-805a55949120"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""South"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""917020a0-0ba4-468a-8bdc-5d04d8203389"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""East"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -140,9 +145,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // MouseClick
         m_MouseClick = asset.FindActionMap("MouseClick", throwIfNotFound: true);
         m_MouseClick_Move = m_MouseClick.FindAction("Move", throwIfNotFound: true);
-        // Movement
-        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
-        m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        // GridMovement
+        m_GridMovement = asset.FindActionMap("GridMovement", throwIfNotFound: true);
+        m_GridMovement_North = m_GridMovement.FindAction("North", throwIfNotFound: true);
+        m_GridMovement_West = m_GridMovement.FindAction("West", throwIfNotFound: true);
+        m_GridMovement_South = m_GridMovement.FindAction("South", throwIfNotFound: true);
+        m_GridMovement_East = m_GridMovement.FindAction("East", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -232,44 +240,71 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     }
     public MouseClickActions @MouseClick => new MouseClickActions(this);
 
-    // Movement
-    private readonly InputActionMap m_Movement;
-    private IMovementActions m_MovementActionsCallbackInterface;
-    private readonly InputAction m_Movement_Move;
-    public struct MovementActions
+    // GridMovement
+    private readonly InputActionMap m_GridMovement;
+    private IGridMovementActions m_GridMovementActionsCallbackInterface;
+    private readonly InputAction m_GridMovement_North;
+    private readonly InputAction m_GridMovement_West;
+    private readonly InputAction m_GridMovement_South;
+    private readonly InputAction m_GridMovement_East;
+    public struct GridMovementActions
     {
         private @PlayerControls m_Wrapper;
-        public MovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Movement_Move;
-        public InputActionMap Get() { return m_Wrapper.m_Movement; }
+        public GridMovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @North => m_Wrapper.m_GridMovement_North;
+        public InputAction @West => m_Wrapper.m_GridMovement_West;
+        public InputAction @South => m_Wrapper.m_GridMovement_South;
+        public InputAction @East => m_Wrapper.m_GridMovement_East;
+        public InputActionMap Get() { return m_Wrapper.m_GridMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
-        public void SetCallbacks(IMovementActions instance)
+        public static implicit operator InputActionMap(GridMovementActions set) { return set.Get(); }
+        public void SetCallbacks(IGridMovementActions instance)
         {
-            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
+            if (m_Wrapper.m_GridMovementActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnMove;
+                @North.started -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnNorth;
+                @North.performed -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnNorth;
+                @North.canceled -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnNorth;
+                @West.started -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnWest;
+                @West.performed -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnWest;
+                @West.canceled -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnWest;
+                @South.started -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnSouth;
+                @South.performed -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnSouth;
+                @South.canceled -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnSouth;
+                @East.started -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnEast;
+                @East.performed -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnEast;
+                @East.canceled -= m_Wrapper.m_GridMovementActionsCallbackInterface.OnEast;
             }
-            m_Wrapper.m_MovementActionsCallbackInterface = instance;
+            m_Wrapper.m_GridMovementActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                @North.started += instance.OnNorth;
+                @North.performed += instance.OnNorth;
+                @North.canceled += instance.OnNorth;
+                @West.started += instance.OnWest;
+                @West.performed += instance.OnWest;
+                @West.canceled += instance.OnWest;
+                @South.started += instance.OnSouth;
+                @South.performed += instance.OnSouth;
+                @South.canceled += instance.OnSouth;
+                @East.started += instance.OnEast;
+                @East.performed += instance.OnEast;
+                @East.canceled += instance.OnEast;
             }
         }
     }
-    public MovementActions @Movement => new MovementActions(this);
+    public GridMovementActions @GridMovement => new GridMovementActions(this);
     public interface IMouseClickActions
     {
         void OnMove(InputAction.CallbackContext context);
     }
-    public interface IMovementActions
+    public interface IGridMovementActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnNorth(InputAction.CallbackContext context);
+        void OnWest(InputAction.CallbackContext context);
+        void OnSouth(InputAction.CallbackContext context);
+        void OnEast(InputAction.CallbackContext context);
     }
 }
