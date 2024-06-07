@@ -13,6 +13,10 @@ public class GameWorld : MonoBehaviour
     [SerializeField]
     private float worldCellSize = 2f;
     [SerializeField]
+    private Tilemap ground;
+    [SerializeField]
+    private Tilemap foreground;
+    [SerializeField]
     private bool debugMode = false;
 
     void Awake() {
@@ -22,17 +26,6 @@ public class GameWorld : MonoBehaviour
 
     void Start()
     {
-        Tilemap[] tilemaps = GetComponentsInChildren<Tilemap>();
-        Tilemap ground = new();
-        Tilemap foreground = new();
-        foreach(Tilemap tilemap in tilemaps) {
-            if(tilemap.name == "Ground") {
-                ground = tilemap;
-            } else if(tilemap.name == "Foreground") {
-                foreground = tilemap;
-            }
-        }
-
         ground.CompressBounds();
         foreground.CompressBounds();
 
@@ -41,9 +34,7 @@ public class GameWorld : MonoBehaviour
         List<Vector3> foregroundTileLocations = GetTileLocations(foreground);
         foreach(Vector3 tileLocation in foregroundTileLocations) {
             PathNode pathNodeAtLocation = pathfinding.GetGrid().GetGridObject(new Vector2(tileLocation.x, tileLocation.y));
-            if(pathNodeAtLocation != null) {
-                pathNodeAtLocation.SetIsWalkable(false);
-            }
+            pathNodeAtLocation?.SetIsWalkable(false);
         }
     }
 
@@ -52,7 +43,7 @@ public class GameWorld : MonoBehaviour
     }
 
     public List<Vector3> GetTileLocations(Tilemap tileMap) {
-        List<Vector3> tiles = new List<Vector3>();
+        List<Vector3> tiles = new();
  
         for (int n = tileMap.cellBounds.xMin; n < tileMap.cellBounds.xMax; n++)
         {

@@ -22,17 +22,13 @@ public enum PlayerInputState
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed = 1f;
-    [SerializeField]
-    private PlayerControls playerControls;
+    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private PlayerControls playerControls;
 
     private Rigidbody2D playerRigidbody;
     private Vector3 mousePosition;
-
     // A list of points on the grid that the player moves along
     private List<Vector3> movePath;
-
     private PlayerState currentState = PlayerState.Idle;
     private PlayerInputState currentInputState = PlayerInputState.Mouse;
 
@@ -46,11 +42,30 @@ public class Player : MonoBehaviour
         movePath = new List<Vector3>();
     }
 
+    private void Update()
+    {
+        PlayerInput();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+    }
+
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
+    }
+
     private void LeftMouseClick(InputAction.CallbackContext context)
     {
-        // If player is moving and the input is keyboard then
-
         Vector3 playerPosition = playerRigidbody.position;
+        // If the player is already moving we remove the rest of the path and let them reach the center of the grid they were moving towards.
         if (movePath.Count > 0)
         {
             movePath.RemoveRange(1, movePath.Count - 1);
@@ -68,98 +83,29 @@ public class Player : MonoBehaviour
         currentInputState = PlayerInputState.Mouse;
     }
 
-    private void OnEnable()
-    {
-        playerControls.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerControls.Disable();
-    }
-
-    private void Update()
-    {
-        PlayerInput();
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-    }
-
     private void PlayerInput()
     {
-        Vector2 wasdInput = Vector2.zero;
+        Vector2 direction = GetKeyPressDirection();
 
-        if(playerControls.GridMovement.North.ReadValue<float>() > 0) {
-            wasdInput += Vector2.up;
-        }
+        direction *= Pathfinding.Instance.GetGrid().GetCellSize();
 
-        if(playerControls.GridMovement.East.ReadValue<float>() > 0) {
-            wasdInput += Vector2.right;
-        }
-
-        if(playerControls.GridMovement.South.ReadValue<float>() > 0) {
-            wasdInput += Vector2.down;
-        }
-
-        if(playerControls.GridMovement.West.ReadValue<float>() > 0) {
-            wasdInput += Vector2.left;
-        }
-
-
-        // if(playerControls.GridMovement.North.ReadValue<float>() > 0) {
-        //     if(playerControls.GridMovement.West.ReadValue<float>() > 0) {
-        //         //NorthWest
-        //         wasdInput = new(-1, 1);
-        //     } else if(playerControls.GridMovement.East.ReadValue<float>() > 0) {
-        //         //NorthEast
-        //         wasdInput = new(1, 1);
-        //     } else {
-        //         //North
-        //         wasdInput = Vector2.up
-        //     }
-        // } else if(playerControls.GridMovement.South.ReadValue<float>() > 0) {
-        //     if(playerControls.GridMovement.West.ReadValue<float>() > 0) {
-        //         //SouthWest
-        //         wasdInput = new(-1, -1);
-        //     } else if(playerControls.GridMovement.East.ReadValue<float>() > 0) {
-        //         //SouthEast
-        //         wasdInput = new(1, -1);
-        //     } else {
-        //         //South
-        //         wasdInput = Vector2.down
-        //     }
-        // } else if(playerControls.GridMovement.West.ReadValue<float>() > 0) {
-        //     // West
-        //     wasdInput = Vector2.left;
-        // } else if(playerControls.GridMovement.East.ReadValue<float>() > 0) {
-        //     // East
-        //     wasdInput = Vector2.right;
-        // }
-
-        wasdInput *= Pathfinding.Instance.GetGrid().GetCellSize();
-
-        if (wasdInput != Vector2.zero)
+        if (direction != Vector2.zero)
         {
-            Vector2 playerPosition = playerRigidbody.position;
-            Vector2 target = playerPosition + wasdInput;
-
             if (currentInputState == PlayerInputState.Mouse)
             {
                 if (movePath.Count > 1)
-                {
+                { 
+                    Vector2 target = (Vector2)movePath[0] + direction;
                     if (Pathfinding.Instance.GetGrid().GetGridObject(target).isWalkable)
                     {
-                        playerPosition = movePath[0];
                         movePath.Clear();
-                        movePath.Add(playerPosition + wasdInput);
+                        movePath.Add(target);
                     }
                 }
             }
             else if (currentInputState == PlayerInputState.Keyboard && currentState != PlayerState.Moving)
             {
+                Vector2 target = playerRigidbody.position + direction;
                 if (Pathfinding.Instance.GetGrid().GetGridObject(target).isWalkable)
                 {
                     movePath.Clear();
@@ -195,5 +141,26 @@ public class Player : MonoBehaviour
             Vector2 newPosition = Vector2.MoveTowards(currentPosition, movePath[0], moveSpeed * Time.fixedDeltaTime);
             playerRigidbody.MovePosition(newPosition);
         }
+    }
+
+    private Vector2 GetKeyPressDirection() {
+        Vector2 direction = Vector2.zero;
+        if(playerControls.GridMovement.North.ReadValue<float>() > 0) {
+            direction += Vector2.up;
+        }
+
+        if(playerControls.GridMovement.East.ReadValue<float>() > 0) {
+            direction += Vector2.right;
+        }
+
+        if(playerControls.GridMovement.South.ReadValue<float>() > 0) {
+            direction += Vector2.down;
+        }
+
+        if(playerControls.GridMovement.West.ReadValue<float>() > 0) {
+            direction += Vector2.left;
+        }
+
+        return direction;
     }
 }
